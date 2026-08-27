@@ -1,0 +1,394 @@
+/* =========================================================
+   OperaCheck — estilos inspirados no modelo azul de referência
+
+   GUIA RÁPIDO — onde mexer para cada campo do formulário:
+   - Todos os campos de texto (Título, Responsável, Participantes)
+     usam a regra genérica "input[type=text]" (linha ~186)
+   - O campo Data usa "input[type=date]" dentro da mesma regra genérica,
+     mas o layout dos 6 quadradinhos (D D M M Y Y) NÃO existe no seu
+     HTML atual — aqui é um <input type="date"> nativo do navegador
+   - Área e Setor (os <select>) usam a regra genérica "select" (linha ~186)
+   - Descrição usa a regra "textarea" (linha ~186 e ~200)
+   - Anexos usa "input[type=file]" (linha ~214)
+   - Todos os rótulos (<label>) — incluindo "Responsável pela Visita" —
+     usam a regra genérica "label" (linha ~170), não existe regra
+     individual por campo
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    /* Cores usadas em todo o site (mude aqui para afetar tudo de uma vez) */
+    --color-navy-dark: #0B1E3D;
+    --color-navy: #143263;
+    --color-blue-primary: #1E88E5;
+    --color-blue-light: #8FD3F4;
+    --color-blue-pale: #EAF6FD;
+    --color-ink: #17233D;
+    --color-ink-soft: #52627E;
+    --color-line: #BFE0F5;
+    --color-surface: #FFFFFF;
+
+    /* Fontes usadas em todo o site */
+    --font-display: 'Poppins', sans-serif;   /* títulos: logo, h2, legend */
+    --font-body: 'Inter', sans-serif;         /* texto normal: labels, inputs, botões */
+
+    --radius: 10px;         /* arredondamento do card branco (article) */
+    --radius-pill: 999px;   /* arredondamento total: pílula da seção e botões */
+    --max-width: 820px;     /* largura máxima do formulário */
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Fundo da página inteira (atrás do card branco) */
+body {
+    margin: 0;
+    background: radial-gradient(circle at 15% 0%, #F4FAFE 0%, var(--color-blue-pale) 45%, #E4F1FB 100%);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+}
+
+/* =========================================================
+   CABEÇALHO — a faixa azul-marinho no topo com "OperaCheck"
+   ========================================================= */
+header {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 2.5rem 2.5rem 2rem;
+    background: linear-gradient(120deg, var(--color-navy-dark) 0%, var(--color-navy) 55%, var(--color-blue-primary) 100%);
+}
+
+/* Formas triangulares decorativas no canto direito do header (efeito diagonal) */
+header::before,
+header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+header::before {
+    right: -6%;
+    width: 40%;
+    clip-path: polygon(35% 0, 100% 0, 65% 100%, 0% 100%);
+}
+
+header::after {
+    right: -14%;
+    width: 30%;
+    background: rgba(30, 136, 229, 0.35);
+    clip-path: polygon(45% 0, 100% 0, 75% 100%, 10% 100%);
+}
+
+/* Texto "OperaCheck" (seu <h4> dentro do <header>).
+   O gradiente com corte em 50% faz metade do texto ficar azul-claro
+   e a outra metade branca, simulando duas cores sem precisar de <span>. */
+header h4 {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 800;
+    background: linear-gradient(
+        90deg,
+        var(--color-blue-light) 0%,
+        var(--color-blue-light) 50%,
+        #FFFFFF 50%,
+        #FFFFFF 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+/* Linha fininha decorativa embaixo do "OperaCheck" */
+header h4::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.6rem;
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+}
+
+/* =========================================================
+   CONTEÚDO PRINCIPAL — o card branco com o formulário
+   ========================================================= */
+main {
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem 1.25rem 4rem;
+}
+
+/* O card branco em si (<article>) */
+article {
+    width: 100%;
+    max-width: var(--max-width);
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    padding: 2.5rem 3rem 2.75rem;
+    box-shadow: 0 10px 30px rgba(20, 50, 99, 0.08);
+}
+
+/* Título "Nova demanda" (<h2>) */
+article > h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    margin: 0 0 0.5rem;
+}
+
+/* Texto de instrução "Preencha os campos abaixo..." (<p>) */
+article > p {
+    margin: 0 0 1.75rem;
+    color: var(--color-ink-soft);
+    font-size: 0.95rem;
+}
+
+/* =========================================================
+   FIELDSET — organiza os campos em 2 colunas lado a lado
+   (Título+Data, Área+Setor, Responsável+Descrição, etc.)
+   ========================================================= */
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;  /* 2 colunas — mude para "1fr" para empilhar tudo */
+    column-gap: 2rem;
+    row-gap: 1.15rem;
+}
+
+/* A "pílula" azul-clara com o texto "Informações da demanda" (<legend>) */
+legend {
+    grid-column: 1 / -1;  /* ocupa a largura toda, ignorando as 2 colunas do fieldset */
+    width: 100%;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    background: var(--color-blue-light);
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--radius-pill);
+    margin-bottom: 1.4rem;
+}
+
+/* =========================================================
+   CADA CAMPO — regra genérica que vale para TODOS os campos:
+   Título, Data, Área, Setor, Responsável, Descrição,
+   Participantes e Anexos (cada um é um <div> dentro do fieldset)
+   ========================================================= */
+fieldset > div {
+    display: grid;
+    grid-template-columns: 150px 1fr;  /* 150px para o rótulo, o resto para o campo */
+    align-items: center;
+    column-gap: 0.75rem;
+}
+
+/* Exceção: os campos "Descrição" (textarea) e "Anexos" (input file)
+   ocupam a linha inteira (as 2 colunas do fieldset), em vez de
+   dividir espaço com o campo vizinho */
+fieldset > div:has(textarea),
+fieldset > div:has(input[type="file"]) {
+    grid-column: 1 / -1;
+}
+
+/* Todos os rótulos (Título, Data, Área, Setor, Responsável pela Visita,
+   Descrição, Participantes, Anexos) — não existe regra individual por
+   campo, todos usam este mesmo estilo */
+label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-ink);
+}
+
+/* Adiciona automaticamente o ":" depois do texto de cada rótulo,
+   então você NÃO precisa digitar ":" no HTML */
+label::after {
+    content: ":";
+    color: var(--color-ink-soft);
+    margin-left: 0.5rem;
+}
+
+/* Exceção só para os rótulos "Data" e "Setor": em vez de empurrar o ":"
+   até a borda da coluna (justify-content: space-between, herdado da
+   regra "label" acima), aqui o ":" fica logo depois da palavra */
+label[for="data"],
+label[for="setor"] {
+    justify-content: flex-start;
+}
+
+/* Continuação da exceção acima: encolhe a coluna do rótulo para o
+   tamanho do texto (em vez dos 150px fixos), assim a caixinha do
+   campo vem logo depois do ":", sem espaço vazio sobrando */
+fieldset > div:has(> label[for="data"]),
+fieldset > div:has(> label[for="setor"]) {
+    grid-template-columns: auto 1fr;
+    column-gap: 0.5rem;
+}
+
+/* Aparência das caixas de entrada:
+   - input[type="text"]  → Título, Responsável pela Visita, Participantes
+   - input[type="date"]  → Data
+   - select               → Área, Setor
+   - textarea             → Descrição
+   (Anexos / input[type="file"] tem sua própria seção mais abaixo) */
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-line);
+    border-radius: 8px;
+    padding: 0.6rem 0.85rem;
+    width: 90%;
+}
+
+/* Altura mínima só da caixa de Descrição */
+textarea {
+    resize: vertical;
+    min-height: 5.5rem;
+}
+
+/* Efeito de foco (contorno azul) ao clicar em qualquer campo ou botão */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+    outline: none;
+    border-color: var(--color-blue-primary);
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.18);
+}
+
+/* =========================================================
+   ANEXOS — campo de upload de arquivo (input type="file")
+   ========================================================= */
+input[type="file"] {
+    font-size: 0.9rem;
+    color: var(--color-ink-soft);
+}
+
+/* O botãozinho "Escolher arquivos" que o navegador desenha dentro do input */
+input[type="file"]::file-selector-button {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: var(--color-blue-primary);
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: 0.5rem 1rem;
+    margin-right: 0.85rem;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: var(--color-navy);
+}
+
+/* =========================================================
+   BOTÕES — Cadastrar, Ver ações, Cancelar, Voltar
+   ========================================================= */
+form > button {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    padding: 0.7rem 1.6rem;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    margin: 0.5rem 0.6rem 0 0;
+}
+
+/* Botão "Cadastrar" (type="submit") — o único preenchido de azul */
+button[type="submit"] {
+    background: var(--color-blue-primary);
+    color: #FFFFFF;
+}
+
+button[type="submit"]:hover {
+    background: var(--color-navy);
+}
+
+/* Botões "Cancelar" (type="reset") e "Ver ações"/"Voltar" (type="button") —
+   ambos com o mesmo estilo "contorno", sem preenchimento */
+button[type="reset"],
+button[type="button"] {
+    background: transparent;
+    color: var(--color-ink-soft);
+    border-color: var(--color-line);
+}
+
+button[type="reset"]:hover,
+button[type="button"]:hover {
+    color: var(--color-navy);
+    border-color: var(--color-blue-primary);
+}
+
+/* =========================================================
+   RODAPÉ — "© 2026 OperaCheck..."
+   ========================================================= */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--color-ink-soft);
+}
+
+/* =========================================================
+   RESPONSIVO — ajustes para telas de celular (até 640px)
+   ========================================================= */
+@media (max-width: 640px) {
+    header {
+        padding: 1.75rem 1.5rem;
+    }
+
+    header h1 {
+        font-size: 1.7rem;
+    }
+
+    article {
+        padding: 1.75rem 1.5rem;
+    }
+
+    /* No celular, os campos deixam de ficar em 2 colunas e empilham em 1 */
+    fieldset {
+        grid-template-columns: 1fr;
+    }
+
+    /* No celular, cada rótulo fica acima do seu campo, em vez de ao lado */
+    fieldset > div {
+        grid-template-columns: 1fr;
+        row-gap: 0.3rem;
+    }
+
+    /* Esconde o ":" no celular, pois o rótulo já fica em cima do campo */
+    label::after {
+        display: none;
+    }
+}
+
+/* Desativa animações/transições para quem tem essa preferência
+   configurada no sistema operacional (acessibilidade) */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}
