@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de demandas</title>
+</head>
+<body>
+    <header>
+        <h4>OperaCheck</h4>
+    </header>
+    <main>
+    <article>
+        <h2>Nova demanda</h2>
+        <p> Preencha os campos abaixo para cadastrar uma nova demanda.</p>
+        <form action="" method="post">
+            <fieldset>
+                <legend>Informações da demanda</legend>
+                <div>
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                </div>
+
+                <div>
+                        <label for="data">Data</label>
+                        <input type="date" id="data" name="data">
+                </div>
+
+                <div>
+                    <label for="area">Área</label>
+                    <select id="area" name="area" required>
+                        <option value="">Selecione uma área</option>
+                        <option value="area1">Área 1</option>
+                        <option value="area2">Área 2</option>
+                        <option value="area3">Área 3</option>
+                    </select>   
+                </div>
+
+               <div>
+                        <label for="setor">Setor</label>
+                        <select id="setor" name="setor">
+                            <option value="" disabled selected>Selecione um setor</option>
+                            <option value="setorA">Setor A</option>
+                            <option value="setorB">Setor B</option>
+                            <option value="setorC">Setor C</option>
+                            <option value="setorD">Setor D</option>
+                        </select>
+              </div>
+
+                <div>
+                        <label for="responsavel">Responsável pela Visita</label>
+                        <input type="text" id="responsavel" name="responsavel" required>
+                </div>
+
+                <div>
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" name="descricao" rows="4" required></textarea>
+                </div>
+
+                <div>
+                        <label for="participantes">Participantes</label>
+                        <input type="text" id="participantes" name="participantes" required>
+                </div>
+                
+                <div>
+                        <label for="anexos">Anexos</label>
+                        <input type="file" id="anexos" name="anexos" multiple>
+                </div>
+
+            </fieldset>
+
+            <button type="submit">Cadastrar</button>
+            <button type="button">Ver ações</button> 
+            <button type="reset">Cancelar</button>
+            <button type="button">Voltar</button>
+
+        </form>
+    </article>
+    </main>
+    <footer>
+        <p>&copy; 2026 OperaCheck. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
