@@ -1,0 +1,14 @@
+ao · CSS
+/* =========================================================
+   OperaCheck — CSS da página de Ação corretiva
+   Reaproveita o demanda.css (header, article, fieldset,
+   grade de campos, botões). Aqui só o estilo dos campos
+   somente-leitura (dados do chamado de origem).
+   ========================================================= */
+ 
+input[readonly] {
+    background-color: #F2F6FA;
+    color: #52627E;
+    cursor: not-allowed;
+}
+ 

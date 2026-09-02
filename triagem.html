@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triagem de chamado</title>
+    <link rel="stylesheet" href="demandas.css">
+    <link rel="stylesheet" href="triagem.css">
+</head>
+<body>
+    <header>
+        <h1>OperaCheck</h1>
+    </header>
+    <main>
+    <article>
+        <h2>Triagem de chamado</h2>
+        <p>Confira as informações abaixo, verifique se não é um chamado duplicado e defina o encaminhamento.</p>
+
+        <form action="" method="post">
+            <fieldset>
+                <legend>Dados do chamado</legend>
+
+                <div>
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" readonly>
+                </div>
+
+                <div>
+                    <label for="data">Data</label>
+                    <input type="date" id="data" name="data" readonly>
+                </div>
+
+                <div>
+                    <label for="area">Área</label>
+                    <input type="text" id="area" name="area" readonly>
+                </div>
+
+                <div>
+                    <label for="setor">Setor</label>
+                    <input type="text" id="setor" name="setor" readonly>
+                </div>
+
+                <div>
+                    <label for="responsavel">Responsável pela Visita</label>
+                    <input type="text" id="responsavel" name="responsavel" readonly>
+                </div>
+
+                <div>
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" name="descricao" rows="4" readonly></textarea>
+                </div>
+
+                <div>
+                    <label for="participantes">Participantes</label>
+                    <input type="text" id="participantes" name="participantes" readonly>
+                </div>
+
+                <div>
+                    <label for="anexos">Anexos</label>
+                    <input type="text" id="anexos" name="anexos" readonly>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Possíveis chamados duplicados</legend>
+                <ul id="lista-duplicados">
+                    <li>Nenhum chamado parecido encontrado até o momento.</li>
+                </ul>
+            </fieldset>
+
+            <fieldset>
+                <legend>Decisão da triagem</legend>
+
+                <div>
+                    <label for="tipo">Tipo de atendimento</label>
+                    <select id="tipo" name="tipo" required>
+                        <option value="">Selecione o tipo de atendimento</option>
+                        <option value="mecanico">Mecânico</option>
+                        <option value="eletronico">Eletrônico</option>
+                        <option value="ambos">Ambos</option>
+                        <option value="nao_procede">Não é da manutenção</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="designado">Designado para</label>
+                    <input type="text" id="designado" name="designado">
+                </div>
+
+                <div>
+                    <label for="observacaoTriagem">Observação da triagem</label>
+                    <textarea id="observacaoTriagem" name="observacaoTriagem" rows="3"></textarea>
+                </div>
+            </fieldset>
+
+            <button type="submit">Confirmar triagem</button>
+            <button type="button" class="botao-duplicado">Marcar como duplicado</button>
+        </form>
+
+        <nav aria-label="Ações do chamado">
+            <button type="button">Voltar</button>
+        </nav>
+    </article>
+    </main>
+    <footer>
+        <p>&copy; 2026 OperaCheck. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="db.js"></script>
+    <script src="triagem.js"></script>
+</body>
+</html>

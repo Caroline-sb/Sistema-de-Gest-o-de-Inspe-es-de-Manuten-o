@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ação corretiva</title>
+    <link rel="stylesheet" href="demandas.css">
+    <link rel="stylesheet" href="acao.css">
+</head>
+<body>
+    <header>
+        <h1><span class="logo-opera">Opera</span><span class="logo-check">Check</span></h1>
+    </header>
+    <main>
+    <article>
+        <h2>Ação corretiva</h2>
+        <p>Use esta página quando não for possível concluir o chamado agora (ex: falta de peça ou equipamento).</p>
+
+        <form action="" method="post">
+            <fieldset>
+                <legend>Chamado de origem</legend>
+
+                <div>
+                    <label for="chamadoId">Código do chamado</label>
+                    <input type="text" id="chamadoId" name="chamadoId" readonly>
+                </div>
+
+                <div>
+                    <label for="chamadoTitulo">Título do chamado</label>
+                    <input type="text" id="chamadoTitulo" name="chamadoTitulo" readonly>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Dados da ação</legend>
+
+                <div>
+                    <label for="titulo">Título da ação</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                </div>
+
+                <div>
+                    <label for="prazo">Prazo</label>
+                    <input type="date" id="prazo" name="prazo" required>
+                </div>
+
+                <div>
+                    <label for="statusAcao">Status da ação</label>
+                    <select id="statusAcao" name="statusAcao" required>
+                        <option value="">Selecione o status</option>
+                        <option value="aberta">Aberta</option>
+                        <option value="aguardando_peca">Aguardando peça/equipamento</option>
+                        <option value="em_andamento">Em andamento</option>
+                        <option value="concluida">Concluída</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="responsavel">Responsável</label>
+                    <input type="text" id="responsavel" name="responsavel" required>
+                </div>
+
+                <div>
+                    <label for="descricaoAcao">Descrição da ação</label>
+                    <textarea id="descricaoAcao" name="descricaoAcao" rows="3" required></textarea>
+                </div>
+
+                <div>
+                    <label for="comentarios">Comentários</label>
+                    <textarea id="comentarios" name="comentarios" rows="3"></textarea>
+                </div>
+
+                <div>
+                    <label for="anexos">Anexos</label>
+                    <input type="file" id="anexos" name="anexos" multiple>
+                </div>
+            </fieldset>
+
+            <button type="submit">Salvar</button>
+            <button type="reset">Cancelar</button>
+        </form>
+
+        <nav aria-label="Ações da página">
+            <button type="button" id="botao-voltar">Voltar ao chamado</button>
+        </nav>
+    </article>
+    </main>
+    <footer>
+        <p>&copy; 2026 OperaCheck. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="db.js"></script>
+    <script src="acao.js"></script>
+</body>
+</html>
