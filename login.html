@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="demandas.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <header>
+        <h1><span class="logo-opera">Opera</span><span class="logo-check">Check</span></h1>
+    </header>
+    <main>
+    <article class="card-login">
+        <h2>Entrar</h2>
+        <p>Informe seu usuário e senha para continuar.</p>
+
+        <p id="aviso-sucesso" class="aviso-sucesso" style="display:none">
+            Cadastro realizado! Faça login para continuar.
+        </p>
+
+        <form action="login.php" method="post">
+            <div>
+                <label for="usuario">Usuário</label>
+                <input type="text" id="usuario" name="usuario" required>
+            </div>
+
+            <div>
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <nav aria-label="Ações da página">
+            <a href="cadastro_funcionario.html">Não tem cadastro? Cadastre-se aqui</a>
+        </nav>
+    </article>
+    </main>
+    <footer>
+        <p>&copy; 2026 OperaCheck. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Mostra aviso verde se veio do cadastro com sucesso
+        if (new URLSearchParams(window.location.search).get("sucesso") === "1") {
+            document.getElementById("aviso-sucesso").style.display = "block";
+        }
+    </script>
+</body>
+</html>

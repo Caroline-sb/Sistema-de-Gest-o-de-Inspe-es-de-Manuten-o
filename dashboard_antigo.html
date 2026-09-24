@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de chamados</title>
+    <link rel="stylesheet" href="demandas.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header>
+        <h1><span class="logo-opera">Opera</span><span class="logo-check">Check</span></h1>
+    </header>
+    <main>
+    <article>
+        <h2>Chamados</h2>
+        <p>Acompanhe todos os chamados cadastrados e o status atual de cada um.</p>
+
+        <form action="" method="get" class="filtros">
+            <div>
+                <label for="filtroStatus">Status</label>
+                <select id="filtroStatus" name="filtroStatus">
+                    <option value="">Todos</option>
+                    <option value="aberto">Aberto</option>
+                    <option value="triagem">Em triagem</option>
+                    <option value="execucao">Em execução</option>
+                    <option value="verificacao">Aguardando verificação</option>
+                    <option value="concluido">Concluído</option>
+                    <option value="reavaliacao">Reavaliação</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="filtroSetor">Setor</label>
+                <select id="filtroSetor" name="filtroSetor">
+                    <option value="">Todos</option>
+                    <option value="setorA">Setor A</option>
+                    <option value="setorB">Setor B</option>
+                    <option value="setorC">Setor C</option>
+                    <option value="setorD">Setor D</option>
+                </select>
+            </div>
+
+            <div class="filtros-botao">
+                <button type="submit">Filtrar</button>
+            </div>
+        </form>
+
+        <table>
+            <caption>Lista de chamados cadastrados</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Setor</th>
+                    <th scope="col">Responsável</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-tabela-chamados">
+                <tr>
+                    <td>OC-0000000000-000</td>
+                    <td>Exemplo de chamado</td>
+                    <td>Setor A</td>
+                    <td>Nome do responsável</td>
+                    <td><span class="status status-aberto">Aberto</span></td>
+                    <td><a href="triagem.html" class="botao-tabela">Ver</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <nav aria-label="Ações da página">
+            <a href="index.html" class="botao-voltar">Voltar ao início</a>
+        </nav>
+    </article>
+    </main>
+    <footer>
+        <p>&copy; 2026 OperaCheck. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="db.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

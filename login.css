@@ -1,0 +1,42 @@
+/* =========================================================
+   OperaCheck — CSS da tela de Login
+   Reaproveita o demandas.css (header, article, botões, input).
+   Aqui só o ajuste de largura do card, já que o login não
+   precisa de um formulário grande.
+   ========================================================= */
+
+.card-login {
+    max-width: 380px;
+}
+
+.card-login form div {
+    margin-bottom: 15px;
+}
+
+.card-login button {
+    width: 100%;
+}
+
+/* Aviso de sucesso (verde) */
+.aviso-sucesso {
+    background-color: #E6F7ED;
+    color: #1B8A4C;
+    border: 1px solid #A8D5B5;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* Link de cadastro abaixo do formulário de login */
+.card-login nav {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.card-login nav a {
+    color: #1E88E5;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 500;
+}

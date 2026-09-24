@@ -8,13 +8,16 @@
 </head>
 <body>
     <header>
-        <h4>OperaCheck</h4>
+        <h1><span class="logo-opera">Opera</span><span class="logo-check">Check</span></h1>
+        <a href="logout.php" class="botao-sair">Sair</a>
     </header>
     <main>
     <article>
         <h2>Nova demanda</h2>
         <p> Preencha os campos abaixo para cadastrar uma nova demanda.</p>
-        <form action="" method="post">
+        
+        <!-- O form agora aponta para o script PHP -->
+        <form action="salvar_demanda.php" method="post">
             <fieldset>
                 <legend>Informações da demanda</legend>
                 <div>
@@ -23,8 +26,8 @@
                 </div>
 
                 <div>
-                        <label for="data">Data</label>
-                        <input type="date" id="data" name="data">
+                    <label for="data">Data</label>
+                    <input type="date" id="data" name="data">
                 </div>
 
                 <div>
@@ -38,19 +41,19 @@
                 </div>
 
                <div>
-                        <label for="setor">Setor</label>
-                        <select id="setor" name="setor">
-                            <option value="" disabled selected>Selecione um setor</option>
-                            <option value="setorA">Setor A</option>
-                            <option value="setorB">Setor B</option>
-                            <option value="setorC">Setor C</option>
-                            <option value="setorD">Setor D</option>
-                        </select>
+                    <label for="setor">Setor</label>
+                    <select id="setor" name="setor">
+                        <option value="" disabled selected>Selecione um setor</option>
+                        <option value="setorA">Setor A</option>
+                        <option value="setorB">Setor B</option>
+                        <option value="setorC">Setor C</option>
+                        <option value="setorD">Setor D</option>
+                    </select>
               </div>
 
                 <div>
-                        <label for="responsavel">Responsável pela Visita</label>
-                        <input type="text" id="responsavel" name="responsavel" required>
+                    <label for="responsavel">Responsável pela Solicitação</label>
+                    <input type="text" id="responsavel" name="responsavel" required>
                 </div>
 
                 <div>
@@ -59,21 +62,27 @@
                 </div>
 
                 <div>
-                        <label for="participantes">Participantes</label>
-                        <input type="text" id="participantes" name="participantes" required>
+                    <label for="periodo">Período</label>
+                    <select id="periodo" name="periodo">
+                        <option value="" disabled selected>Selecione um período</option>
+                        <option value="Manhã">Manhã</option>
+                        <option value="Tarde">Tarde</option>
+                        <option value="Noite">Noite</option>
+                        <option value="Sazonal">Sazonal</option>
+                    </select>
                 </div>
                 
                 <div>
-                        <label for="anexos">Anexos</label>
-                        <input type="file" id="anexos" name="anexos" multiple>
+                    <label for="anexos">Anexos</label>
+                    <input type="file" id="anexos" name="anexos" multiple>
                 </div>
 
             </fieldset>
 
             <button type="submit">Cadastrar</button>
-            <button type="button">Ver ações</button> 
+            <button type="button" onclick="location.href='dashboard.php'">Ver Chamados</button> 
             <button type="reset">Cancelar</button>
-            <button type="button">Voltar</button>
+            <button type="button" onclick="location.href='index.html'">Voltar</button>
 
         </form>
     </article>
@@ -82,6 +91,29 @@
         <p>&copy; 2026 OperaCheck. Todos os direitos reservados.</p>
     </footer>
 
-    <script src="demanda.js"></script>
+    <!-- Novo Script para mostrar o código gerado automaticamente -->
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('sucesso')) {
+            const id = urlParams.get('id');
+            const form = document.querySelector('form');
+            const mensagem = document.createElement('div');
+            
+            // Estilo rápido para a mensagem verde (quadradinho)
+            mensagem.style.backgroundColor = '#d4edda';
+            mensagem.style.color = '#155724';
+            mensagem.style.padding = '15px';
+            mensagem.style.borderRadius = '8px';
+            mensagem.style.border = '1px solid #c3e6cb';
+            mensagem.style.marginBottom = '20px';
+            mensagem.style.fontWeight = '600';
+            
+            // Formata o ID para ficar no padrão (ex: OC-00005)
+            const codigoFormatado = 'OC-' + String(id).padStart(5, '0');
+            mensagem.innerHTML = 'Demanda registrada com sucesso! O código do seu chamado é: <strong>' + codigoFormatado + '</strong>';
+            
+            form.parentNode.insertBefore(mensagem, form);
+        }
+    </script>
 </body>
 </html>

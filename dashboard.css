@@ -1,0 +1,139 @@
+/* =========================================================
+   OperaCheck — CSS do Dashboard de chamados
+   Reaproveita o demanda.css (header, article, botões).
+   Aqui só os estilos novos: filtros, tabela e badges de status.
+   ========================================================= */
+
+/* -------------------- FILTROS -------------------- */
+.filtros {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filtros div {
+    flex: 1;
+    min-width: 150px;
+}
+
+.filtros-botao {
+    display: flex;
+    align-items: flex-end;
+}
+
+.filtros-botao button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #BFE0F5;
+    background-color: #1E88E5;
+    color: #FFFFFF;
+}
+
+/* -------------------- TABELA -------------------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+caption {
+    text-align: left;
+    color: #52627E;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #EAF6FD;
+}
+
+th {
+    color: #143263;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+/* -------------------- BADGES DE STATUS -------------------- */
+.status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-aberto {
+    background-color: #FFF6E5;
+    color: #7A5A00;
+}
+
+.status-execucao {
+    background-color: #E3F2FD;
+    color: #1E88E5;
+}
+
+.status-concluido {
+    background-color: #E6F7ED;
+    color: #1B8A4C;
+}
+
+.status-reavaliacao {
+    background-color: #FDEAEA;
+    color: #C0392B;
+}
+
+/* -------------------- LINK "VER" (dentro da tabela) -------------------- */
+.botao-tabela {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #BFE0F5;
+    color: #52627E;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* -------------------- BOTÃO VOLTAR (rodapé da página) -------------------- */
+.botao-voltar {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 1px solid #BFE0F5;
+    background-color: #FFFFFF;
+    color: #52627E;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* -------------------- AJUSTES DE LARGURA E ESPAÇO -------------------- */
+/* Aumenta a largura do cartão branco apenas no Dashboard */
+article {
+    max-width: 1100px; /* Largura bem maior para caber todas as colunas */
+    width: 95%;
+}
+
+/* Impede que os textos quebrem para a linha de baixo (ex: OC- 00005) */
+th, td {
+    white-space: nowrap;
+}
+
+/* Permite que APENAS a coluna de "Título" quebre a linha se o texto for muito grande, 
+   para a tabela não crescer infinitamente para os lados */
+td:nth-child(2) {
+    white-space: normal;
+    min-width: 250px;
+}
+
+/* Ajusta o botão roxo de triagem para nunca quebrar o texto */
+.botao-tabela {
+    white-space: nowrap;
+}
+
+.status-duplicado {
+    background-color: #ECEFF1;
+    color: #546E7A;
+    text-decoration: line-through; /* Opcional: risca o texto para dar ideia de cancelado */
+}

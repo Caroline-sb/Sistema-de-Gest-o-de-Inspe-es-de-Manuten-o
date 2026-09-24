@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de funcionário</title>
+    <link rel="stylesheet" href="demandas.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <header>
+        <h1><span class="logo-opera">Opera</span><span class="logo-check">Check</span></h1>
+    </header>
+    <main>
+    <article class="card-login">
+        <h2>Cadastrar funcionário</h2>
+        <p>Uso interno da equipe — cria o login de um novo funcionário.</p>
+
+        <p id="aviso-sucesso" class="aviso-sucesso" style="display:none">
+            Funcionário cadastrado com sucesso!
+        </p>
+
+        <form action="cadastrar_funcionario.php" method="post">
+            <div>
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+
+            <div>
+                <label for="cargo">Cargo</label>
+                <select id="cargo" name="cargo" required>
+                    <option value="">Selecione o cargo</option>
+                    <option value="Solicitante">Solicitante</option>
+                    <option value="Mantenedor">Mantenedor</option>
+                    <option value="Supervisor">Supervisor</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="usuario">Usuário</label>
+                <input type="text" id="usuario" name="usuario" required>
+            </div>
+
+            <div>
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </article>
+    </main>
+    <footer>
+        <p>&copy; 2026 OperaCheck. Todos os direitos reservados.</p>
+    </footer>
+    <script>
+        // Se a URL tiver ?sucesso=1, mostra o aviso verde
+        if (new URLSearchParams(window.location.search).get("sucesso") === "1") {
+            document.getElementById("aviso-sucesso").style.display = "block";
+        }
+    </script>
+</body>
+</html>

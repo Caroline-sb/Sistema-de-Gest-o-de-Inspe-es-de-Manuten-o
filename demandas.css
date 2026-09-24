@@ -18,7 +18,10 @@ body {
 /* A faixa azul-marinho no topo com o texto "OperaCheck" */
 header {
     background-color: #143263;
-    padding: 30px;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header h1 {
@@ -34,6 +37,21 @@ header h1 {
 /* "Check" em branco */
 .logo-check {
     color: #FFFFFF;
+}
+
+/* Botão de sair no cabeçalho */
+.botao-sair {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid #4FC3F7;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+}
+
+.botao-sair:hover {
+    background-color: rgba(79, 195, 247, 0.1);
 }
 
 /* -------------------- ÁREA PRINCIPAL -------------------- */
@@ -118,6 +136,7 @@ label::after {
 /* Todas as caixas de texto, data, seleção e área de texto */
 input[type="text"],
 input[type="date"],
+input[type="password"],
 select,
 textarea {
     width: 100%;
