@@ -8,7 +8,7 @@
 $host = "localhost";
 $banco = "Operacheck";
 $usuario = "root";
-$senha = ""; // troque pela sua senha real do MySQL
+$senha = "Leonardo25"; // troque pela sua senha real do MySQL
 
 try {
     $conexao = new PDO(

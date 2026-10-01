@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação do supervisor</title>
+    <link rel="stylesheet" href="demandas.css">
+    <link rel="stylesheet" href="verificacao.css">
+</head>
+<body>
+    <header>
+        <h1><span class="logo-opera">Opera</span><span class="logo-check">Check</span></h1>
+    </header>
+    <main>
+    <article>
+        <h2>Verificação do supervisor</h2>
+        <p>Confirme se o serviço foi realmente executado antes de encerrar o chamado.</p>
+
+        <form action="" method="post">
+            <fieldset>
+                <legend>Chamado de origem</legend>
+
+                <div>
+                    <label for="chamadoId">Código do chamado</label>
+                    <input type="text" id="chamadoId" name="chamadoId" readonly>
+                </div>
+
+                <div>
+                    <label for="chamadoTitulo">Título do chamado</label>
+                    <input type="text" id="chamadoTitulo" name="chamadoTitulo" readonly>
+                </div>
+
+                <div>
+                    <label for="chamadoResponsavel">Executado por</label>
+                    <input type="text" id="chamadoResponsavel" name="chamadoResponsavel" readonly>
+                </div>
+
+                <div>
+                    <label for="chamadoDataConclusao">Data informada como concluído</label>
+                    <input type="date" id="chamadoDataConclusao" name="chamadoDataConclusao" readonly>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Verificação</legend>
+
+                <div>
+                    <label for="servicoRealizado">O serviço foi realizado corretamente?</label>
+                    <select id="servicoRealizado" name="servicoRealizado" required>
+                        <option value="">Selecione uma opção</option>
+                        <option value="sim">Sim, confirmo a conclusão</option>
+                        <option value="nao">Não, precisa de reavaliação</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="validadoPor">Validado por</label>
+                    <input type="text" id="validadoPor" name="validadoPor" required>
+                </div>
+
+                <div>
+                    <label for="observacaoSupervisor">Observação do supervisor</label>
+                    <textarea id="observacaoSupervisor" name="observacaoSupervisor" rows="3"></textarea>
+                </div>
+
+                <div>
+                    <label for="anexos">Foto de conclusão</label>
+                    <input type="file" id="anexos" name="anexos" accept="image/*" multiple required>
+                </div>
+            </fieldset>
+
+            <button type="submit">Confirmar conclusão</button>
+            <button type="button" id="botao-reavaliacao">Enviar para reavaliação</button>
+        </form>
+
+        <nav aria-label="Ações da página">
+            <button type="button" id="botao-voltar">Voltar</button>
+        </nav>
+    </article>
+    </main>
+    <footer>
+        <p>&copy; 2026 OperaCheck. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="db.js"></script>
+    <script src="verificacao.js"></script>
+</body>
+</html>

@@ -21,8 +21,8 @@ $cargo_logado = $utilizador['cargo'] ?? 'Solicitante';
 $filtroStatus = $_GET['filtroStatus'] ?? '';
 $filtroSetor = $_GET['filtroSetor'] ?? '';
 
+// Busca dos dados para a tabela com base nos filtros e permissões
 try {
-    // Começa a construir a consulta base
     $sql = "SELECT c.id_chamados, c.titulo, c.setor, c.status_chamado, f.nome AS responsavel 
             FROM chamados c 
             LEFT JOIN funcionarios f ON c.id_funcionario_abertura = f.id_matricula 
@@ -30,28 +30,24 @@ try {
     
     $parametros = [];
 
-    // REGRA DE SEGURANÇA: Se for Solicitante, filtra restritamente apenas pelos chamados dele
+    // Solicitante só vê os próprios chamados
     if ($cargo_logado == 'Solicitante') {
         $sql .= " AND c.id_funcionario_abertura = :meu_id";
         $parametros[':meu_id'] = $id_utilizador;
     }
 
-    // Se escolheu um Status no filtro da tela
     if (!empty($filtroStatus)) {
         $sql .= " AND c.status_chamado = :status";
         $parametros[':status'] = $filtroStatus;
     }
 
-    // Se escolheu um Setor no filtro da tela
     if (!empty($filtroSetor)) {
         $sql .= " AND c.setor = :setor";
         $parametros[':setor'] = $filtroSetor;
     }
 
-    // Ordena do mais novo para o mais antigo
     $sql .= " ORDER BY c.id_chamados DESC";
     
-    // Prepara e executa a busca com os parâmetros de forma segura
     $stmt = $conexao->prepare($sql);
     $stmt->execute($parametros);
     $chamados = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -80,6 +76,18 @@ try {
         <h2>Chamados</h2>
         <p>Acompanhe todos os chamados cadastrados e o status atual de cada um.</p>
 
+        <!-- MENSAGEM DE SUCESSO AO ABRIR NOVO CHAMADO -->
+        <?php if (isset($_GET['sucesso']) && $_GET['sucesso'] == '1' && isset($_GET['novo_id'])): ?>
+            <?php 
+                $codigo_novo = 'OC-' . str_pad($_GET['novo_id'], 5, '0', STR_PAD_LEFT); 
+            ?>
+            <div style="background-color: #E6F7ED; color: #1B8A4C; padding: 15px; border-radius: 8px; border: 1px solid #BFE0F5; margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 20px;">✅</span>
+                Chamado aberto com sucesso! O número da sua solicitação é: <span style="font-size: 16px; background-color: white; padding: 3px 8px; border-radius: 5px; border: 1px solid #1B8A4C; margin-left: 5px;"><?= htmlspecialchars($codigo_novo) ?></span>
+            </div>
+        <?php endif; ?>
+
+        <!-- FORMULÁRIO DE FILTROS -->
         <form action="dashboard.php" method="get" class="filtros">
             <div>
                 <label for="filtroStatus">Status</label>
@@ -88,7 +96,7 @@ try {
                     <option value="aberto" <?= $filtroStatus == 'aberto' ? 'selected' : '' ?>>Aberto</option>
                     <option value="triagem" <?= $filtroStatus == 'triagem' ? 'selected' : '' ?>>Em triagem</option>
                     <option value="execucao" <?= $filtroStatus == 'execucao' ? 'selected' : '' ?>>Em execução</option>
-                    <option value="verificacao" <?= $filtroStatus == 'verificacao' ? 'selected' : '' ?>>Aguardando verificação</option>
+                    <option value="aguardando_verificacao" <?= $filtroStatus == 'aguardando_verificacao' ? 'selected' : '' ?>>Aguardando verificação</option>
                     <option value="concluido" <?= $filtroStatus == 'concluido' ? 'selected' : '' ?>>Concluído</option>
                     <option value="reavaliacao" <?= $filtroStatus == 'reavaliacao' ? 'selected' : '' ?>>Reavaliação</option>
                     <option value="duplicado" <?= $filtroStatus == 'duplicado' ? 'selected' : '' ?>>Duplicado</option>
@@ -111,6 +119,7 @@ try {
             </div>
         </form>
 
+        <!-- TABELA DE CHAMADOS -->
         <table>
             <caption>Lista de chamados cadastrados</caption>
             <thead>
@@ -137,6 +146,8 @@ try {
                             
                             if ($chamado['status_chamado'] == 'execucao') {
                                 $textoStatus = 'Execução';
+                            } elseif ($chamado['status_chamado'] == 'aguardando_verificacao') {
+                                $textoStatus = 'Aguardando verificação';
                             } else {
                                 $textoStatus = ucfirst($chamado['status_chamado']);
                             }
@@ -157,8 +168,20 @@ try {
                                     <?php endif; ?>
                                 </td>
                             <?php endif; ?>
-                            
-                            <td><a href="acao.php?id=<?= $chamado['id_chamados'] ?>" class="botao-tabela">Ver</a></td>
+
+                            <td>
+                                <?php if ($chamado['status_chamado'] == 'aguardando_verificacao' && $cargo_logado == 'Supervisor'): ?>
+                                    <a href="verificacao.php?id=<?= $chamado['id_chamados'] ?>" class="botao-tabela" style="background-color: #1B8A4C; color: white; border: none;">Verificar</a>
+                                <?php elseif ($chamado['status_chamado'] == 'aguardando_verificacao'): ?>
+                                    <span style="color: #A0AABF; font-size: 12px; font-weight: 600;">Aguardando supervisor</span>
+                                <?php elseif ($chamado['status_chamado'] == 'concluido' || $chamado['status_chamado'] == 'duplicado'): ?>
+                                    <span style="color: #A0AABF; font-size: 12px; font-weight: 600;">Encerrado</span>
+                                <?php elseif ($cargo_logado == 'Solicitante'): ?>
+                                    <span style="color: #A0AABF; font-size: 12px; font-weight: 600;">Em andamento</span>
+                                <?php else: ?>
+                                    <a href="acao.php?id=<?= $chamado['id_chamados'] ?>" class="botao-tabela">Ver</a>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

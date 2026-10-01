@@ -17,10 +17,37 @@ $stmt->execute();
 $utilizador = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $nome = $utilizador['nome'] ?? 'Utilizador';
+// Pega apenas o primeiro nome para uma saudação mais amigável
+$primeiro_nome = explode(' ', trim($nome))[0];
 $cargo = $utilizador['cargo'] ?? 'Solicitante';
+
+// Variáveis para os contadores do painel
+$acoes_atrasadas = 0;
+$total_pendentes = 0;
+$aguardando_triagem = 0;
+
+// Se for da equipe técnica, busca os números no banco
+if ($cargo == 'Mantenedor' || $cargo == 'Supervisor') {
+    try {
+        // 1. Conta chamados aguardando triagem (status 'aberto')
+        $sql_triagem = "SELECT COUNT(*) FROM chamados WHERE status_chamado = 'aberto'";
+        $aguardando_triagem = $conexao->query($sql_triagem)->fetchColumn();
+
+        // 2. Conta total de chamados pendentes (tudo que não está concluído ou duplicado)
+        $sql_pendentes = "SELECT COUNT(*) FROM chamados WHERE status_chamado NOT IN ('concluido', 'duplicado')";
+        $total_pendentes = $conexao->query($sql_pendentes)->fetchColumn();
+
+        // 3. Ações atrasadas: Mantido 0 por enquanto até finalizarmos a tela de "Ações" e seus prazos.
+        // $sql_atrasadas = "SELECT COUNT(*) FROM acoes WHERE status_acao != 'concluida' AND prazo < CURDATE()";
+        // $acoes_atrasadas = $conexao->query($sql_atrasadas)->fetchColumn();
+        
+    } catch (PDOException $erro) {
+        // Apenas previne que a página quebre caso falhe a contagem
+    }
+}
 ?>
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,33 +62,43 @@ $cargo = $utilizador['cargo'] ?? 'Solicitante';
     </header>
     <main>
     <article>
-        <h2 style="margin-bottom: 5px;">Bem-vindo, <?= htmlspecialchars($nome) ?>!</h2>
+        <h2 style="margin-bottom: 5px;">Bem-vindo, <?= htmlspecialchars($primeiro_nome) ?>!</h2>
         
         <?php if ($cargo == 'Mantenedor' || $cargo == 'Supervisor'): ?>
             <!-- ========================================== -->
-            <!-- VISÃO DA EQUIPA TÉCNICA (Mantenedor/Supervisor) -->
+            <!-- VISÃO DA EQUIPE TÉCNICA (Mantenedor/Supervisor) -->
             <!-- ========================================== -->
-            <p>Painel de controlo da equipa de manutenção.</p>
+            <p>Painel de controlo da equipe de manutenção.</p>
 
             <section class="indicadores" aria-label="Indicadores gerais">
-                <div class="indicador">
-                    <span class="indicador-numero">2</span>
+                
+                <!-- Redireciona para Minhas Ações -->
+                <div class="indicador" onclick="window.location.href='dashboard.php?filtroStatus=execucao'" style="cursor: pointer;" title="Ver ações em execução">
+                    <span class="indicador-numero"><?= $acoes_atrasadas ?></span>
                     <span class="indicador-texto">Ações atrasadas</span>
                 </div>
-                <div class="indicador">
-                    <span class="indicador-numero">5</span>
-                    <span class="indicador-texto">Total de chamados</span>
+                
+                <!-- Redireciona para Dashboard Completo -->
+                <div class="indicador" onclick="window.location.href='dashboard.php'" style="cursor: pointer;" title="Ver todos os chamados">
+                    <span class="indicador-numero"><?= $total_pendentes ?></span>
+                    <span class="indicador-texto">Total de chamados pendentes</span>
                 </div>
-                <div class="indicador">
-                    <span class="indicador-numero">0</span>
+                
+                <!-- Redireciona para Fila de Triagem -->
+                <div class="indicador" onclick="window.location.href='dashboard.php?filtroStatus=aberto'" style="cursor: pointer;" title="Ir para a fila de triagem">
+                    <span class="indicador-numero"><?= $aguardando_triagem ?></span>
                     <span class="indicador-texto">Aguardando Triagem</span>
                 </div>
+                
             </section>
 
             <h3 style="color: #143263; font-size: 16px; margin-top: 30px;">Acesso Rápido</h3>
             <nav class="acoes-rapidas" aria-label="Ações rápidas" style="justify-content: flex-start; flex-wrap: wrap;">
                 <a href="dashboard.php" class="botao botao-primario">Dashboard Completo</a>
-                <!-- Como Triagem e Ação dependem de um chamado específico, levamos o técnico para o painel para ele escolher o chamado na lista -->
+                
+                <!-- BOTÃO DE RELATÓRIOS DESTACADO -->
+                <a href="relatorios.php" class="botao botao-primario" style="background-color: #2ECC71; border-color: #27AE60;">Ver Relatórios</a>
+                
                 <a href="dashboard.php?filtroStatus=aberto" class="botao botao-secundario">Fila de Triagem</a>
                 <a href="dashboard.php?filtroStatus=execucao" class="botao botao-secundario">Minhas Ações</a>
             </nav>

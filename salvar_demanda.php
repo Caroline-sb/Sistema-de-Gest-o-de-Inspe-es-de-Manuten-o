@@ -40,8 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // 6. Descobre qual foi o ID (número do chamado) gerado
         $id_gerado = $conexao->lastInsertId();
         
-        // 7. Redireciona de volta para a tela, passando o ID na URL para mostrar a mensagem verde
-        header("Location: index.html?sucesso=1&id=" . $id_gerado);
+        // 7. Redireciona de volta para o Dashboard, passando o ID na URL para mostrar a mensagem verde
+        header("Location: dashboard.php?sucesso=1&novo_id=" . $id_gerado);
         exit;
 
     } catch (PDOException $erro) {
