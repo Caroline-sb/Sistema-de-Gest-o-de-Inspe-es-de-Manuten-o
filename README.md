@@ -1,9 +1,9 @@
 # Sistema-de-Gest-o-de-Inspe-es-de-Manuten-o
-# ⚙️ OperaCheck
+#  OperaCheck
 
 O **OperaCheck** é um sistema web de gestão de manutenção industrial desenvolvido para controlar, monitorizar e dar seguimento a chamados corretivos e preventivos de forma eficiente e segura.
 
-## 🚀 Funcionalidades Principais
+##  Funcionalidades Principais
 
 * **Controle de Acesso por Cargos (RBAC):**
   * **Solicitante:** Abre novos chamados e acompanha o progresso das suas próprias solicitações.
@@ -15,7 +15,7 @@ O **OperaCheck** é um sistema web de gestão de manutenção industrial desenvo
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 * **Linguagem Backend:** PHP (com PDO)
 * **Base de Dados:** MySQL / MariaDB
@@ -25,7 +25,7 @@ O **OperaCheck** é um sistema web de gestão de manutenção industrial desenvo
 
 ---
 
-## 📂 Estrutura Principal do Projeto
+##  Estrutura Principal do Projeto
 
 * `bancodados.php` — Arquivo central de conexão com a base de dados via PDO.
 * `login.html` / `login.php` — Ecrã de autenticação de utilizadores.
@@ -38,7 +38,7 @@ O **OperaCheck** é um sistema web de gestão de manutenção industrial desenvo
 
 ---
 
-## 🚀 Como Executar o Projeto Localmente
+##  Como Executar o Projeto Localmente
 
 1. Certifique-se de ter um servidor local a correr (como o **XAMPP** com o Apache e o MySQL ativados).
 2. Importe a base de dados do projeto para o seu gestor MySQL (ex: phpMyAdmin).
